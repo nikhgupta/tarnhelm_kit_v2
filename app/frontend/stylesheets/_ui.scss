@@ -1,0 +1,45 @@
+@layer components {
+  .alert {
+    @apply my-4 py-3 px-6 font-medium text-base transition duration-500 ease-in-out transform rounded-md border-2 bg-base-150;
+    &.alert-info {
+      @apply border-info border-opacity-20 text-info bg-info bg-opacity-10;
+    }
+    &.alert-error {
+      @apply border-error border-opacity-20 text-error bg-error bg-opacity-10;
+    }
+    &.alert-warning {
+      @apply border-warning border-opacity-20 text-warning bg-warning bg-opacity-10;
+    }
+    &.alert-success {
+      @apply border-success border-opacity-20 text-success bg-success bg-opacity-10;
+    }
+  }
+
+  .btn {
+    @apply px-6 py-2 font-medium text-base transition duration-500 ease-in-out transform rounded-md border-b-2 focus:outline-none focus:ring-2;
+    &.btn-default {
+      @apply text-base-content border-base-200 bg-base-150 hover:bg-base-200 hover:ring-base-150;
+    }
+    &.btn-primary {
+      @apply text-primary-content bg-primary border-primary-focus hover:bg-primary-focus hover:ring-primary;
+    }
+    &.btn-secondary {
+      @apply text-secondary-content bg-secondary border-secondary-focus hover:bg-secondary-focus hover:ring-secondary;
+    }
+    &.btn-accent {
+      @apply text-accent-content bg-accent border-accent-focus hover:bg-accent-focus hover:ring-accent;
+    }
+    &.btn-info {
+      @apply text-info-content bg-info border-info-focus hover:bg-info-focus hover:ring-info;
+    }
+    &.btn-error {
+      @apply text-error-content bg-error border-error-focus hover:bg-error-focus hover:ring-error;
+    }
+    &.btn-warning {
+      @apply text-warning-content bg-warning border-warning-focus hover:bg-warning-focus hover:ring-warning;
+    }
+    &.btn-success {
+      @apply text-success-content bg-success border-success-focus hover:bg-success-focus hover:ring-success;
+    }
+  }
+}

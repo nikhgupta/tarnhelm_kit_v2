@@ -1,18 +1,47 @@
 {
   "name": "tarnhelm",
   "private": true,
+  "version": "0.1.0",
   "dependencies": {
+    "@babel/preset-typescript": "^7.15.0",
+    "@fullhuman/postcss-purgecss": "^4.0.3",
     "@hotwired/turbo-rails": "^7.0.0-rc.1",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.4.2",
+    "@tailwindcss/aspect-ratio": "^0.2.1",
+    "@tailwindcss/forms": "^0.3.3",
+    "@tailwindcss/line-clamp": "^0.2.1",
+    "@tailwindcss/typography": "^0.4.1",
+    "autoprefixer": "^10.3.1",
+    "lodash": "^4.17.21",
+    "postcss": "^8.3.5",
+    "postcss-flexbugs-fixes": "^5.0.2",
+    "postcss-import": "^14.0.2",
+    "postcss-loader": "^4.0.3",
+    "postcss-preset-env": "^6.7.0",
+    "sass": "^1.35.2",
     "stimulus": "^2.0.0",
-    "webpack": "^4.46.0",
-    "webpack-cli": "^3.3.12"
+    "tailwindcss": "^2.2.4",
+    "typescript": "^4.3.5",
+    "webpack": "^4.46.0"
   },
-  "version": "0.1.0",
   "devDependencies": {
-    "webpack-dev-server": "^4.0.0"
+    "@babel/eslint-parser": "^7.15.0",
+    "@types/rails__actioncable": "^6.1.5",
+    "@types/rails__activestorage": "^6.0.1",
+    "@types/rails__ujs": "^6.0.1",
+    "@types/webpack-env": "^1.16.2",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.24.0",
+    "eslint-plugin-prettier": "^3.4.0",
+    "prettier": "^2.3.2",
+    "webpack-cli": "^3.3.12",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "scripts": {
+    "eslint-fix": "yarn run eslint --fix --ext .js,.ts ."
   }
 }

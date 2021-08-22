@@ -1,0 +1,29 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
+
+@import "ui";
+@import "forms";
+@import "typography";
+
+html {
+  scroll-behavior: smooth;
+}
+
+@layer base {
+  :focus,
+  :active,
+  :visited,
+  :target,
+  :focus-within,
+  :focus-visible {
+    outline: 1px dotted;
+    outline: 5px auto var(--tw-base-150);
+    background-color: var(--tw-base-150);
+  }
+}
+@layer components {
+  .wrapper {
+    @apply container mx-auto px-6 py-4;
+  }
+}
