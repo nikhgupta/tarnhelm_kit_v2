@@ -1,0 +1,48 @@
+inherit_gem:
+  rubocop-shopify: rubocop.yml
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - db/**/*
+    - bin/**/*
+    - script/**/*
+    - vendor/**/*
+    - node_modules/**/*
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Max: 40
+  Exclude:
+    - test/**/*
+    - spec/**/*
+    - config/routes.rb
+    - lib/tasks/*.rake
+
+Layout/LineLength:
+  Max: 120
+  Exclude:
+    - config/initializers/devise.rb
+
+Metrics/MethodLength:
+  Max: 40
+
+Metrics/ClassLength:
+  Max: 400
+
+Metrics/ModuleLength:
+  Max: 400
+
+Metrics/AbcSize:
+  Max: 35
+
+Metrics/CyclomaticComplexity:
+  Max: 10
+
+Metrics/PerceivedComplexity:
+  Max: 10
+
+Style/ClassAndModuleChildren:
+  Enabled: false
