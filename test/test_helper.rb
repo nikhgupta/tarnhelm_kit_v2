@@ -1,8 +1,11 @@
 # frozen_string_literal: true
 
+require "simplecov"
 ENV["RAILS_ENV"] ||= "test"
+
 require_relative "../config/environment"
 require "rails/test_help"
+require "mocha/minitest"
 
 module ActiveSupport
   class TestCase
@@ -15,3 +18,5 @@ module ActiveSupport
     # Add more helper methods to be used by all tests here...
   end
 end
+
+Dir.glob(Rails.root.join("test", "support", "**", "*.rb")).each { |file| require file }
