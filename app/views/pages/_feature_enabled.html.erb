@@ -1,0 +1,22 @@
+<% if data[:status] == :active %>
+    <div class="flex items-end mb-3 text-success">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 icon icon-tabler icon-tabler-circle-check" style="min-width: 24; min-height: 24" fill="none" view-xox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+        </svg>
+        <p class="font-bold"><%= data[:description] %>.</p>
+    </div>
+<% elsif data[:status] == :inactive %>
+    <div class="flex items-center mb-3 text-error">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 icon icon-tabler icon-tabler-circle-check" style="min-width: 24; min-height: 24" fill="none" view-box="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <p class="font-bold"><%= data[:description] %> (DISABLED)</p>
+    </div>
+<% else %>
+    <div class="flex items-end mb-3 text-warning">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 icon icon-tabler icon-tabler-circle-check" style="min-width: 24; min-height: 24" fill="none" view-xox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
+        </svg>
+        <p class="font-bold"><%= data[:description] %>. (<%= data[:status_humanized] %>)</p>
+    </div>
+<% end %>

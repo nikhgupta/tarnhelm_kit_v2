@@ -1,0 +1,29 @@
+<div class="flex flex-col w-full text-left">
+    <div class="w-full py-32 my-10 bg-base-150 flex flex-col items-center justify-center rounded-md shadow">
+        <h2 class="heading text-primary"><%= Tarnhelm.app.name %></h2>
+        <p class="mt-5 text-base-content font-bold">Welcome to your new Ruby on Rails app with TailWind CSS, React JS, and TypeScript support.</p>
+    </div>
+
+    <div class="w-full text-left grid grid-cols-3 gap-4">
+        <div>
+            <h3 class="heading text-secondary mb-5">Status</h3>
+            <p class="text-success font-bold">
+                - Your Tailwind CSS setup is working if this is green.
+            </p>
+
+            <div data-controller="pages--home">
+                <p class="text-error font-bold" data-pages--home-target="check">
+                    - Your StimulusJS with Typescript setup is not working.
+                </p>
+            </div>
+        </div>
+
+        <div class="col-span-2">
+            <h3 class="heading text-secondary mb-5">Features List</h3>
+            <% Tarnhelm.features_list.each do |data| %>
+                <%= render "feature_enabled", data: data %>
+            <% end %>
+        </div>
+
+    </div>
+</div>

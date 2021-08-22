@@ -1,0 +1,32 @@
+<div class="items-center border-base-200 border-b bg-base-150 shadow fixed w-full animated min-h-20 z-10">
+    <div class="transition duration-500 ease-in-out transform rounded-none wrapper py-3">
+        <div class="flex flex-row flex-wrap items-center mx-auto">
+            <%= render(Logo::Component.new(title: Tarnhelm.app.name)) %>
+
+            <nav class="flex flex-wrap items-center text-base justify-left ">
+                <ul class="items-center list-none hidden md:inline-flex">
+                    <li><%= link_to "Home", root_path, class: "nav link" %></li>
+                    <li><%= link_to "About", pages_path(id: :about), class: "nav link" %></li>
+                    <li><%= link_to "Contact", pages_path(id: :contact), class: "nav link" %></li>
+                    <li><%= link_to "Feature Management", feature_management_path, class: "nav link" %></li>
+                </ul>
+            </nav>
+            <%- if Tarnhelm.active?(:user_auth) %>
+                <div class="flex flex-wrap justify-end ml-auto items-en xl:flex-nowrap md:flex-nowrap lg:flex-wrap">
+                    <%- if current_user.present? %>
+                        <%= render partial: "layouts/application/user_center" %>
+                    <% else %>
+                        <%= link_to "Login", new_user_session_path, class: "btn btn-accent lg:mr-3" %>
+                        <%= link_to "Register", new_user_registration_path, class: "btn btn-secondary sm:block hidden" %>
+                    <%- end %>
+                </div>
+            <%- end %>
+        </div>
+
+    </div>
+
+    <%= render(Flash::Component.new(flash: flash, dismissable: true)) %>
+    <%- if @resource.present? || (defined?(resource) && resource.present?) %>
+        <%= render(Flash::Component.new(flash: { alert: (@resource || resource).errors.full_messages }, dismissable: true)) %>
+    <%- end %>
+</div>

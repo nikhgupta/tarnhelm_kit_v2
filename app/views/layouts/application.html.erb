@@ -1,16 +1,27 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Tarnhelm</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<html class="antialiased min-h-screen">
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+    <head>
+        <title>
+            <% if content_for?(:title) %><%= yield :title %> | <% end %>
+            <%= Tarnhelm.app.name %>
+        </title>
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <%= csrf_meta_tags %>
+        <%= csp_meta_tag %>
 
-  <body>
-    <%= yield %>
-  </body>
+        <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+        <%= stylesheet_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+        <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    </head>
+
+    <body class="bg-base-100 text-base-content font-sans font-normal leading-normal min-h-screen flex flex-col">
+        <div class="flex flex-grow flex-col">
+            <%= render "layouts/application/header" %>
+            <main class="wrapper mt-20">
+                <%= content_for?(:content) ? yield(:content) : yield %>
+            </main>
+        </div>
+    </body>
+
 </html>
