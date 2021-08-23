@@ -1,8 +1,7 @@
 # frozen_string_literal: true
 
 module DeviseSystemTestHelpers
-  def sign_in_as(user, password = nil)
-    email = "#{user}@localhost.none"
+  def sign_in_as(email, password = nil)
     password ||= "password" unless Tarnhelm.active?(:user_magic_links)
 
     visit(new_user_session_url)

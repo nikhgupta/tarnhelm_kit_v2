@@ -2,24 +2,34 @@
 require "application_system_test_case"
 
 class UserProfileTest < ApplicationSystemTestCase
+  setup do
+    FactoryBot.create(:user,
+      email: "john@localhost.none",
+      unconfirmed_email: "unconfirmed-john@localhost.none",
+      confirmation_sent_at: 1.day.ago,
+      confirmation_token: SecureRandom.urlsafe_base64)
+
+    FactoryBot.create(:user, password: nil, email: "magic@localhost.none")
+  end
+
   context "default features" do
     should "allow user with password auth to update email" do
-      sign_in_as(:fred)
+      sign_in_as("john@localhost.none")
 
       visit edit_user_registration_url
-      assert page.has_field?("user_email", with: "fred@localhost.none")
-      assert_flash notice: "Currently waiting confirmation for: unconfirmed-fred@localhost.none"
+      assert page.has_field?("user_email", with: "john@localhost.none")
+      assert_flash notice: "Currently waiting confirmation for: unconfirmed-john@localhost.none"
       assert_link "Delete my Data"
 
       # assert that this notification is persistent
       assert_no_selector ".flash.notice [aria-label='Close']"
       find(".flash.notice").click
-      assert_flash notice: "Currently waiting confirmation for: unconfirmed-fred@localhost.none"
+      assert_flash notice: "Currently waiting confirmation for: unconfirmed-john@localhost.none"
 
       click_on "Edit Profile"
       assert_button "Update Profile"
-      fill_in "user_name", with: "Fred George"
-      fill_in "user_email", with: "new-fred@localhost.none"
+      fill_in "user_name", with: "John George"
+      fill_in "user_email", with: "new-john@localhost.none"
       click_on "Update Profile"
       assert_flash notice: /updated your account successfully.*verify your new email address/
 
@@ -30,22 +40,22 @@ class UserProfileTest < ApplicationSystemTestCase
       visit edit_user_registration_url
       assert_no_flash
       click_on "Edit Profile"
-      assert page.has_field?("user_email", with: "new-fred@localhost.none")
-      assert page.has_field?("user_name", with: "Fred George")
+      assert page.has_field?("user_email", with: "new-john@localhost.none")
+      assert page.has_field?("user_name", with: "John George")
 
-      user = User.find_by(email: "new-fred@localhost.none")
+      user = User.find_by(email: "new-john@localhost.none")
       assert user.present?
-      assert_equal user.name, "Fred George"
+      assert_equal user.name, "John George"
 
-      assert_nil User.find_by(email: "fred@localhost.none")
+      assert_nil User.find_by(email: "john@localhost.none")
     end
 
     should "allow user with password auth to update password" do
-      sign_in_as(:fred)
+      sign_in_as("john@localhost.none")
 
       visit edit_user_registration_url
-      assert page.has_field?("user_email", with: "fred@localhost.none")
-      assert_flash notice: "Currently waiting confirmation for: unconfirmed-fred@localhost.none"
+      assert page.has_field?("user_email", with: "john@localhost.none")
+      assert_flash notice: "Currently waiting confirmation for: unconfirmed-john@localhost.none"
       assert_link "Delete my Data"
 
       click_on "Change Password"
@@ -56,11 +66,11 @@ class UserProfileTest < ApplicationSystemTestCase
       assert_flash notice: "Your account has been updated successfully."
 
       sign_out
-      sign_in_as(:fred, "password-2")
+      sign_in_as("john@localhost.none", "password-2")
     end
 
     should "allow user with magic auth to add password to their profile" do
-      sign_in_as(:magic)
+      sign_in_as("magic@localhost.none")
 
       visit edit_user_registration_url
       assert page.has_field?("user_email", with: "magic@localhost.none")
@@ -99,7 +109,7 @@ class UserProfileTest < ApplicationSystemTestCase
     end
 
     should "allow user with magic auth to change email on their profile" do
-      sign_in_as(:magic)
+      sign_in_as("magic@localhost.none")
 
       visit edit_user_registration_url
       assert page.has_field?("user_email", with: "magic@localhost.none")
@@ -117,7 +127,7 @@ class UserProfileTest < ApplicationSystemTestCase
       assert page.has_field?("user_email", with: "new-magic@localhost.none")
 
       sign_out
-      sign_in_as("new-magic")
+      sign_in_as("new-magic@localhost.none")
     end
   end
 
@@ -125,7 +135,7 @@ class UserProfileTest < ApplicationSystemTestCase
     should "not show password fields to user or allow him to add passwords" do
       disable_feature :user_passwords
 
-      sign_in_as(:magic)
+      sign_in_as("magic@localhost.none")
       visit edit_user_registration_url
       assert page.has_field?("user_email", with: "magic@localhost.none")
       assert_link "Delete my Data"

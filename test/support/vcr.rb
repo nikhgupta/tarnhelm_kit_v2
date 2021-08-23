@@ -7,7 +7,7 @@ driver_urls = Webdrivers::Common.subclasses.map do |driver|
 end
 
 VCR.configure do |config|
-  config.cassette_library_dir = "spec/vcr_cassettes"
+  config.cassette_library_dir = "test/vcr_cassettes"
   config.hook_into(:webmock)
 
   config.ignore_localhost = true

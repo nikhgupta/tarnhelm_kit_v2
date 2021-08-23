@@ -2,13 +2,19 @@
 require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
+  attr_reader :user, :magic
+
+  setup do
+    @user = FactoryBot.create(:user)
+    @magic = FactoryBot.create(:user, password: nil)
+  end
+
   context "associations" do
     should have_many(:authenticating_identities)
   end
 
   context "validations" do
     should "validate confirmation of password" do
-      user = users(:pass)
       assert user.valid?
 
       user.password = ""
@@ -22,33 +28,32 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "checks whether user login using password" do
-    refute users(:pass).requires_magic_link?
-    assert users(:pass).can_login_using_password?
+    refute user.requires_magic_link?
+    assert user.can_login_using_password?
 
     disable_feature :user_passwords
-    assert users(:pass).requires_magic_link?
-    refute users(:pass).can_login_using_password?
+    assert user.requires_magic_link?
+    refute user.can_login_using_password?
 
     disable_feature :user_magic_links
-    refute users(:pass).requires_magic_link?
-    refute users(:pass).can_login_using_password?
+    refute user.requires_magic_link?
+    refute user.can_login_using_password?
   end
 
   test "checks whether user can only login with magic link" do
-    assert users(:magic).requires_magic_link?
-    refute users(:magic).can_login_using_password?
+    assert magic.requires_magic_link?
+    refute magic.can_login_using_password?
 
     disable_feature :user_magic_links
-    refute users(:pass).requires_magic_link?
-    assert users(:pass).can_login_using_password?
+    refute user.requires_magic_link?
+    assert user.can_login_using_password?
 
     disable_feature :user_passwords
-    refute users(:pass).requires_magic_link?
-    refute users(:pass).can_login_using_password?
+    refute user.requires_magic_link?
+    refute user.can_login_using_password?
   end
 
   test "#generated_email?" do
-    user = users(:fred)
     assert_equal user.generated_email?, false
 
     user.email = "something@#{Tarnhelm.app.generated_email_domain}"
@@ -56,7 +61,6 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "finds an #authenticating_identity_for a given provider" do
-    user = users(:fred)
     auth = user.authenticating_identities.create(provider: "test", uid: "123")
 
     assert_equal user.authenticating_identity_for(:test), auth
@@ -64,19 +68,16 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "can find internal users easily" do
+    FactoryBot.create(:user, email: "test@otherdomain123.com")
     assert_nil User.internal(:demo)
-    assert_nil User.internal(:fred)
+    assert_nil User.internal(:test)
 
-    demo = User.new(email: "demo@#{Tarnhelm.app.host}", password: "password", password_confirmation: "password")
-    demo.skip_confirmation!
-    demo.save
-
+    demo = FactoryBot.create(:user, email: "demo@#{Tarnhelm.app.host}")
     assert_equal User.internal(:demo), demo
   end
 
   test "it adds a unique salt, encryption and secret key for each record" do
-    id1 = users(:pass)
-    id2 = users(:magic)
+    id1, id2 = FactoryBot.build_list(:user, 2)
 
     assert_equal id1.salt.length, 128
     assert_equal id2.salt.length, 128

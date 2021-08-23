@@ -16,6 +16,8 @@ class UserLoginTest < ApplicationSystemTestCase
     end
 
     test "logging in with magic link" do
+      FactoryBot.create(:user, email: "pass@localhost.none")
+
       visit root_url
 
       click_on "Login"
@@ -42,6 +44,8 @@ class UserLoginTest < ApplicationSystemTestCase
     end
 
     test "logging in with password" do
+      FactoryBot.create(:user, email: "pass@localhost.none")
+
       visit root_url
 
       click_on "Login"
@@ -62,6 +66,8 @@ class UserLoginTest < ApplicationSystemTestCase
     end
 
     test "logging in for magic-link only users while providing password" do
+      FactoryBot.create(:user, email: "magic@localhost.none", password: nil)
+
       visit new_user_session_url
       fill_in "Email", with: "magic@localhost.none"
       click_to_show_password_fields "Want to use your password?"
@@ -119,6 +125,8 @@ class UserLoginTest < ApplicationSystemTestCase
 
   class MagicLinksDisabled < UserLoginTest
     test "fallback to password based login" do
+      FactoryBot.create(:user, email: "pass@localhost.none")
+
       disable_feature :user_magic_links
 
       visit root_url

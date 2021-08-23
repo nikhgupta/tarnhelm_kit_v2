@@ -51,17 +51,18 @@ class UserOmniauthTest < ApplicationSystemTestCase
     end
 
     test "identity gets re-assigned to latest authenticating user" do
+      user = FactoryBot.create(:user, email: "john@localhost.none")
       prev = sign_in_via_google
       sign_out
 
-      current = sign_in_as(:fred)
+      sign_in_as(user.email)
       visit edit_user_registration_url
 
       click_on "Social Logins"
       find(".oauth-google").click
       assert_flash notice: "Successfully linked your Google account with this account."
 
-      assert current.authenticating_identity_for(:google).present?
+      assert user.authenticating_identity_for(:google).present?
       assert prev.authenticating_identity_for(:google).blank?
     end
 

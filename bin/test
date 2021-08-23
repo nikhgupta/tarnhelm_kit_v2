@@ -1,8 +1,21 @@
 #!/usr/bin/env sh
 
-DISABLE_SPRING=1 RAILS_ENV=test bundle exec rails db:reset 
+DISABLE_SPRING=1 RAILS_ENV=test bundle exec rails db:reset
+
+_path=$(dirname $0)/../tmp/test-results.log
+echo >$_path
+
 if [ $# -eq 0 ]; then
-  DISABLE_SPRING=1 RAILS_ENV=test bundle exec rails test:all
+  DISABLE_SPRING=1 RAILS_ENV=test script -q $_path bundle exec rails test:all
 else
-  DISABLE_SPRING=1 RAILS_ENV=test bundle exec rails test $@
+  DISABLE_SPRING=1 RAILS_ENV=test script -q $_path bundle exec rails test $@
 fi
+
+_failed=$(cat $_path | grep "rails test" | sort)
+
+if [[ -n "$_failed" ]]; then
+  echo "\n\nFailing tests:\n\n\033[1;31m${_failed}\033[0m\n\n"
+  exit 127
+fi
+
+exit 0
