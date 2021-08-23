@@ -49,19 +49,19 @@ module Tarnhelm
     # generate a secret key on the fly (length = 128)
     # - if secret key is defined in credentails.yaml, use that
     # - otherwise, generate it from the hash algorithm above
-    def generate_secret_key(str)
-      secret(str) || hash(str.to_s, length: 128, key: :base)
+    def generate_secret_key(str, length: 128)
+      secret(str) || hash(str.to_s, length: length, key: :base)
     end
 
     # generate an encryption key on the fly (length = 32)
-    def generate_enc_key(str)
-      hash(str.to_s, length: 32, key: :encryption)
+    def generate_enc_key(str, length: 64)
+      hash(str.to_s, length: length, key: :encryption)
     end
 
     # encryptor which uses a `purpose` to define secret and
     # signing secret on the fly
     def encryptor(purpose = :encryption)
-      key = generate_enc_key(purpose)
+      key = generate_enc_key(purpose, length: 32)
       sign = generate_secret_key(purpose)
       ActiveSupport::MessageEncryptor.new(key, sign, serializer: JSON)
     end

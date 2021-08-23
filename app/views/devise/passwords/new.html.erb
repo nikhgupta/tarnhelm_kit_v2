@@ -1,0 +1,10 @@
+<h1 class="heading">Forgot your password?</h1>
+<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post, class: "mt-6", data: { turbo: false } }) do |f| %>
+
+    <div class="mt-10">
+        <%= f.label :email, class: "form-control label-text" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", class: "form-control form-field block w-full" %>
+    </div>
+
+    <%= f.submit 'Send me reset password instructions', class: "btn btn-primary block w-full mt-5" %>
+<% end %>

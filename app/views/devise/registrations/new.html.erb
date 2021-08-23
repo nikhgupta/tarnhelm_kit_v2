@@ -1,0 +1,35 @@
+<h1 class="heading">Register for an account</h1>
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), class: "mt-6", data: { turbo: false, controller: "devise--password-area" }) do |f| %>
+    <div class="mt-10">
+        <%= f.label :email, class: "form-control label-text" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", 
+                        class: "form-control form-field block w-full" %>
+    </div>
+
+    <%- if Tarnhelm.active?(:user_passwords) && Tarnhelm.active?(:user_magic_links) %>
+        <div class="text-right mt-2">
+            <span class="form-control form-helper-text mt-5" data-devise--password-area-target="toggler" data-action="click->devise--password-area#togglePasswordArea" data-auth-name="Register" data-magic-name="Send me a Magic Link">Add a password? (not recommended)</span>
+        </div>
+    <% end %>
+
+    <%- if Tarnhelm.active?(:user_passwords) %>
+        <div class="auth-password">
+            <div class="mt-4">
+                <%= f.label :password, class: "form-control label-text" %>
+                <%= f.password_field :password, autocomplete: "new-password",
+                        placeholder: "Password #{"(#{@minimum_password_length} characters minimum)" if @minimum_password_length}", 
+                        class: "form-control form-field block w-full" %>
+            </div>
+            <div class="mt-4">
+                <%= f.label :password_confirmation, class: "form-control label-text" %>
+                <%= f.password_field :password_confirmation, autocomplete: "new-password", placeholder: "Password", 
+                        class: "form-control form-field block w-full" %>
+            </div>
+        </div>
+    <% end %>
+
+    <%= f.submit Tarnhelm.active?(:user_magic_links) ? 'Send me a Magic Link' : 'Register',
+    class: "btn btn-primary block w-full mt-5", data: { "devise--password-area-target": "authButton" } %>
+<% end %>
+
+<%= render "devise/shared/omniauth_links", verb: "Sign up" %>

@@ -11,16 +11,14 @@
                     <li><%= link_to "Feature Management", feature_management_path, class: "nav link" %></li>
                 </ul>
             </nav>
-            <%- if Tarnhelm.active?(:user_auth) %>
-                <div class="flex flex-wrap justify-end ml-auto items-en xl:flex-nowrap md:flex-nowrap lg:flex-wrap">
-                    <%- if current_user.present? %>
-                        <%= render partial: "layouts/application/user_center" %>
-                    <% else %>
-                        <%= link_to "Login", new_user_session_path, class: "btn btn-accent lg:mr-3" %>
-                        <%= link_to "Register", new_user_registration_path, class: "btn btn-secondary sm:block hidden" %>
-                    <%- end %>
-                </div>
-            <%- end %>
+            <div class="flex flex-wrap justify-end ml-auto items-en xl:flex-nowrap md:flex-nowrap lg:flex-wrap">
+                <%- if current_user.present? %>
+                    <%= render partial: "layouts/application/user_center" %>
+                <% else %>
+                    <%= link_to "Login", new_user_session_path, class: "btn btn-accent lg:mr-3" %>
+                    <%= link_to "Register", new_user_registration_path, class: "btn btn-secondary sm:block hidden" %>
+                <%- end %>
+            </div>
         </div>
 
     </div>

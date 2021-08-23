@@ -15,7 +15,6 @@ gem "puma", "~> 5.0"
 gem "sass-rails", ">= 6"
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem "webpacker", "~> 5.0"
-# Turbolinks makes navigating your web application faster. Read more: https://github.com/turbolinks/turbolinks
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem "jbuilder", "~> 2.7"
 # Use Redis adapter to run Action Cable in production
@@ -24,7 +23,7 @@ gem "redis", "~> 4.0"
 # gem 'bcrypt', '~> 3.1.7'
 
 # Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
+gem "image_processing", "~> 1.2"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.4", require: false
@@ -32,7 +31,6 @@ gem "bootsnap", ">= 1.4.4", require: false
 group :development, :test do
   gem "byebug", platforms: [:mri, :mingw, :x64_mingw]
   gem "dotenv-rails"
-  gem "factory_bot_rails"
   gem "pry-rails"
 end
 
@@ -78,3 +76,14 @@ gem "lockbox"
 gem "flipper"
 gem "flipper-ui"
 gem "flipper-active_record"
+
+# User management
+gem "name_of_person"
+gem "devise"
+gem "devise-passwordless"
+
+# omniauth
+gem "omniauth"
+gem "omniauth-twitter"
+gem "omniauth-google-oauth2"
+gem "omniauth-rails_csrf_protection"

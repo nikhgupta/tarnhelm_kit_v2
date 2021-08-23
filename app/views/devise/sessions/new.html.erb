@@ -1,0 +1,28 @@
+<h1 class="heading">Log in to your account</h1>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), class: "mt-6", data: { turbo: false, controller: "devise--password-area" }) do |f| %>
+    <div class="mt-10">
+        <%= f.label :email, class: "form-control label-text" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", class: "form-control form-field block w-full" %>
+    </div>
+
+    <%- if Tarnhelm.active?(:user_passwords) && Tarnhelm.active?(:user_magic_links) %>
+        <div class="text-right mt-2">
+            <span class="form-control form-helper-text mt-5" data-devise--password-area-target="toggler" data-action="click->devise--password-area#togglePasswordArea" data-auth-name="Log in" data-magic-name="Send me a Magic Link"> Want to use your password?</span>
+        </div>
+    <% end %>
+
+    <%- if Tarnhelm.active?(:user_passwords) %>
+        <div class="auth-password">
+            <div class="mt-4">
+                <%= f.label :password, class: "form-control label-text" %>
+                <%= f.password_field :password, autocomplete: "current-password", placeholder: "Password", 
+              class: "form-control form-field w-full block" %>
+            </div>
+        </div>
+    <% end %>
+
+    <%= f.submit Tarnhelm.active?(:user_magic_links) ? 'Send me a Magic Link' : 'Log in',
+    class: "btn btn-primary block w-full mt-5", data: { "devise--password-area-target": "authButton" } %>
+<% end %>
+
+<%= render "devise/shared/omniauth_links", verb: "Log in" %>

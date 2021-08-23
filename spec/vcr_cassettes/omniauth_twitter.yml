@@ -1,0 +1,139 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://via.placeholder.com/50x50.png
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - via.placeholder.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 22 Aug 2021 16:09:22 GMT
+      Content-Type:
+      - image/png
+      Content-Length:
+      - '160'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - max-age=604800
+      Cf-Bgj:
+      - imgq:85,h2pri
+      Cf-Polished:
+      - origSize=182
+      Etag:
+      - '"5febd112-b6"'
+      Expires:
+      - Thu, 19 Aug 2021 00:08:31 GMT
+      Last-Modified:
+      - Wed, 30 Dec 2020 01:00:02 GMT
+      Vary:
+      - Accept
+      X-Cache:
+      - L1
+      Cf-Cache-Status:
+      - HIT
+      Age:
+      - '555498'
+      Accept-Ranges:
+      - bytes
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=aK2A2Lhyixo4duhQ8zfyq917gs%2FUei62c%2BAkv88g1C8NmiNFsSVus8dqDw%2BPdgdtAmjYVokitLlwGo0RLCfq%2BNyNe3HlrPGCvrUvV4gNlO9cHBwSVxjJT2gF2Km1L%2FcvIrThC4r3mAReniShCmSVKB0%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 682d5d78cee00df1-BOM
+      Alt-Svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400, h3=":443";
+        ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAG1BMVEXMzMzFxcW+vr63t7exsbGqqqqjo6OcnJyWlpawiKwlAAAAQElEQVR42mNgGAWjgP6ANdjMAEaiAhaGwgJWERCJLsNe0tDAWAgi0WWYNAoLGAtBJIY9IWYGrCIgcjTMRwFxAADyrQrnV7GKQAAAAABJRU5ErkJggg==
+  recorded_at: Sun, 22 Aug 2021 16:09:22 GMT
+- request:
+    method: get
+    uri: https://via.placeholder.com/50x50.png
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - via.placeholder.com
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Date:
+      - Sun, 22 Aug 2021 16:09:22 GMT
+      Content-Type:
+      - image/png
+      Content-Length:
+      - '160'
+      Connection:
+      - keep-alive
+      Cache-Control:
+      - max-age=604800
+      Cf-Bgj:
+      - imgq:85,h2pri
+      Cf-Polished:
+      - origSize=182
+      Etag:
+      - '"5febd112-b6"'
+      Expires:
+      - Thu, 19 Aug 2021 00:08:31 GMT
+      Last-Modified:
+      - Wed, 30 Dec 2020 01:00:02 GMT
+      Vary:
+      - Accept
+      X-Cache:
+      - L1
+      Cf-Cache-Status:
+      - HIT
+      Age:
+      - '555498'
+      Accept-Ranges:
+      - bytes
+      Expect-Ct:
+      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      Report-To:
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=BCwWuRoiahoryt1Zmycir1lDM5jO8jn3%2FBLyTO2oVYjBChY0q2vLCWMdnFCqYD9Jo2zR%2F54%2FEsrdHDZ0HD6BfxqGW5gsRIw64YKuhg6AWj6GcvTUMxWgMT2RtuPKmZqW9M8Ei08YzFKcHvk3eEFegwM%3D"}],"group":"cf-nel","max_age":604800}'
+      Nel:
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
+      Server:
+      - cloudflare
+      Cf-Ray:
+      - 682d5d79db0e0efc-BOM
+      Alt-Svc:
+      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400, h3=":443";
+        ma=86400
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        iVBORw0KGgoAAAANSUhEUgAAADIAAAAyBAMAAADsEZWCAAAAG1BMVEXMzMzFxcW+vr63t7exsbGqqqqjo6OcnJyWlpawiKwlAAAAQElEQVR42mNgGAWjgP6ANdjMAEaiAhaGwgJWERCJLsNe0tDAWAgi0WWYNAoLGAtBJIY9IWYGrCIgcjTMRwFxAADyrQrnV7GKQAAAAABJRU5ErkJggg==
+  recorded_at: Sun, 22 Aug 2021 16:09:22 GMT
+recorded_with: VCR 6.0.0

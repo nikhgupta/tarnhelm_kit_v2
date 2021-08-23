@@ -1,0 +1,35 @@
+<h2 class="heading">Edit User Account</h2>
+
+<div class="flex flex-row">
+    <%= render partial: "devise/registrations/navigation" %>
+    <div class="mb-10 max-w-screen-sm w-full">
+        <div class="container flex flex-col">
+            <h3 class="heading text-base-content mb-5 mt-0">You can connect your social accounts for easier logins below.</h3>
+            <%= turbo_frame_tag "authentications" do %>
+                <%- @identities.each do |auth| %>
+                    <div class="oauth-<%= auth.provider %> flex flex-col py-3 mb-2 sm:flex-row lg:w-1/2 bg-base-150 p-4 rounded-md border border-base-200 my-5">
+                        <div class="inline-flex items-center flex-grow text-center sm:text-left sm:mt-0">
+                            <div class="flex flex-col">
+                                <h3 class="heading text-accent-focus m-0 text-xl"><%= auth.name %></h3>
+                                <span class="text-sm font-bold"><%= auth.email.present? ? auth.email : "UID: #{auth.uid}" %></span>
+
+                                <%= link_to "Remove", authenticating_identity_path(auth), method: :delete,
+                                        class: "text-xs text-error" %>
+                            </div>
+                        </div>
+                    </div>
+                <%- end %>
+                <%- @missing.each do |auth| %>
+                    <div class="flex flex-col py-3 mb-2 sm:flex-row lg:w-1/2">
+                        <div class="inline-flex items-center flex-grow text-center sm:text-left sm:mt-0">
+                            <%= button_to("Link your #{auth.name} account",
+                            omniauth_authorize_path(:user, auth.provider),
+                            method: :post, data: { turbo: false },
+                            class: "oauth-#{auth.provider} btn btn-accent font-bold") %>
+                        </div>
+                    </div>
+                <%- end %>
+            <%- end %>
+        </div>
+    </div>
+</div>

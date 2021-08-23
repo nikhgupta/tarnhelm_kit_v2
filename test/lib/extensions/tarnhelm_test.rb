@@ -145,7 +145,7 @@ class TarnhelmConfigTestCase < ActiveSupport::TestCase
   context "#generate_enc_key" do
     should "generate encryption keys from a given string" do
       key = Tarnhelm.generate_enc_key(:test)
-      assert_equal key.length, 32
+      assert_equal key.length, 64
       assert_equal key, Tarnhelm.generate_enc_key(:test)
       refute_equal key, Tarnhelm.generate_enc_key(:base)
       refute_equal key, Tarnhelm.generate_enc_key(:ping)

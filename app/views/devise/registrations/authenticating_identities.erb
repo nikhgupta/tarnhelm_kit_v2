@@ -1,0 +1,33 @@
+<h2 class="heading">Edit User Account</h2>
+
+<div class="flex flex-row">
+    <%= render partial: "devise/registrations/navigation" %>
+    <div class="mb-10 max-w-screen-sm w-full">
+        <div class="container flex flex-col">
+            <h3 class="text-xl mb-5">You can connect your social accounts for easier logins below.</h3>
+            <%= turbo_frame_tag "authentications" do %>
+                <%- User.omniauth_providers.each.with_index do |provider, idx| %>
+                    <%- auth = current_user.authenticating_identity_for(provider) %>
+                    <div class="flex flex-col py-3 mb-2 sm:flex-row lg:w-1/2">
+                        <div class="inline-flex items-center flex-grow text-center sm:text-left sm:mt-0">
+                            <% if auth.present? %>
+                                <div class="flex flex-col">
+                                    <h3><%= OmniAuth::Utils.camelize(provider) %></h3>
+                                    <span class="text-sm font-bold"><%= auth.email.present? ? auth.email : "UID: #{auth.uid}" %></span>
+
+                                    <%= link_to "Remove", destroy_user_authenticating_identity_path(auth), method: :delete,
+                                        class: "text-xs text-error" %>
+                                </div>
+                            <% else %>
+                                <%= button_to("Link your #{OmniAuth::Utils.camelize(provider)} account",
+                            omniauth_authorize_path(resource_name, provider),
+                            method: :post, data: { turbo: false },
+                            class: "oauth-#{provider} btn btn-accent #{auth ? 'text-sm' : 'font-bold'}") %>
+                            <% end %>
+                        </div>
+                    </div>
+                <%- end %>
+            <%- end %>
+        </div>
+    </div>
+</div>

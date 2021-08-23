@@ -24,6 +24,7 @@
     "sass": "^1.35.2",
     "stimulus": "^2.0.0",
     "tailwindcss": "^2.2.4",
+    "tailwindcss-stimulus-components": "^2.2.1",
     "typescript": "^4.3.5",
     "webpack": "^4.46.0"
   },

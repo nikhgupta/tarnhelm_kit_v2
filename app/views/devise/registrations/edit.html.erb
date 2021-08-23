@@ -1,0 +1,35 @@
+<h2 class="heading">Edit User Account</h2>
+
+<div class="flex flex-row">
+    <%= render partial: "devise/registrations/navigation" %>
+    <div class="mb-10 max-w-screen-sm w-full">
+        <div class="w-full mb-10">
+            <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, data: { turbo: false } }) do |f| %>
+
+                <div>
+                    <span class="form-control form-helper-text">
+                        Name
+                    </span>
+                    <%= f.text_field :name, placeholder: "Your Name", 
+                        class: "form-control form-field block w-full" %>
+                </div>
+
+                <div class="mt-4">
+                    <span class="form-control form-helper-text">
+                        Email Address
+                    </span>
+                    <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", 
+                        class: "form-control form-field block w-full" %>
+
+                    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+                        <div class="my-5">
+                            <%= render(Flash::Component.new(flash: {notice: "Currently waiting confirmation for: #{resource.unconfirmed_email}"}, dismissable: false)) %>
+                        <% end %>
+                    </div>
+                </div>
+
+                <%= f.submit "Update Profile", class: "btn btn-primary mt-5" %>
+            <% end %>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,12 @@
+<h2 class="heading">Resend confirmation instructions</h2>
+
+<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, class: "mt-6", data: { turbo: false } }) do |f| %>
+
+    <div class="mt-10">
+        <%= f.label :email, class: "form-control label-text" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", placeholder: "Email", 
+                      class: "form-control form-field block w-full",
+                      value: (resource.pending_reconfirmation? ? resource.unconfirmed_email : resource.email) %>
+    </div>
+    <%= f.submit 'Resend confirmation instructions', class: "btn btn-primary block w-full mt-5" %>
+<% end %>

@@ -7945,6 +7945,13 @@ table@^6.0.9:
     string-width "^4.2.0"
     strip-ansi "^6.0.0"
 
+tailwindcss-stimulus-components@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/tailwindcss-stimulus-components/-/tailwindcss-stimulus-components-2.2.1.tgz#0dbadbe0f7c41cfe7b048183f5931e1f7e404f47"
+  integrity sha512-m2YzoURnPhn2W9uNzMzpwE+nD+AjewUnV7qC0VVkxQDaPeYz/I7OXjD7zgXrUBDXGhQEFJuyJhiC8eA02GibgQ==
+  dependencies:
+    stimulus "^2.0.0"
+
 tailwindcss@^2.2.4:
   version "2.2.7"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-2.2.7.tgz#795d07a14ef46c2dc4a1610f7f906f697daaf731"
