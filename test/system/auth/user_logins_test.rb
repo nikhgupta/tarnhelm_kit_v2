@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 require "application_system_test_case"
 
-class UserLoginTest < ApplicationSystemTestCase
-  class DefaultFeatures < UserLoginTest
-    test "visit static pages without logging in" do
+class UserLoginsTest < ApplicationSystemTestCase
+  context "default features" do
+    should "visit static pages without logging in" do
       visit root_url
       assert_logged_out_ui
 
@@ -15,8 +15,8 @@ class UserLoginTest < ApplicationSystemTestCase
       assert_selector "h1", text: "About Page"
     end
 
-    test "logging in with magic link" do
-      FactoryBot.create(:user, email: "pass@localhost.none")
+    should "log in with magic link" do
+      create(:user, email: "pass@localhost.none")
 
       visit root_url
 
@@ -43,8 +43,8 @@ class UserLoginTest < ApplicationSystemTestCase
       assert_no_flash
     end
 
-    test "logging in with password" do
-      FactoryBot.create(:user, email: "pass@localhost.none")
+    should "log in with password" do
+      create(:user, email: "pass@localhost.none")
 
       visit root_url
 
@@ -65,8 +65,8 @@ class UserLoginTest < ApplicationSystemTestCase
       assert_flash notice: "Signed in successfully."
     end
 
-    test "logging in for magic-link only users while providing password" do
-      FactoryBot.create(:user, email: "magic@localhost.none", password: nil)
+    should "log in for magic-link only users while providing password" do
+      create(:user, email: "magic@localhost.none", password: nil)
 
       visit new_user_session_url
       fill_in "Email", with: "magic@localhost.none"
@@ -85,8 +85,8 @@ class UserLoginTest < ApplicationSystemTestCase
     end
   end
 
-  class PasswordsDisabled < UserLoginTest
-    test "do not display password related links/triggers" do
+  context "passwords disabled" do
+    should "not display password related links/triggers" do
       disable_feature :user_passwords
 
       visit root_url
@@ -100,8 +100,8 @@ class UserLoginTest < ApplicationSystemTestCase
     end
   end
 
-  class RegistrationDisabled < UserLoginTest
-    test "do not show links for sign up" do
+  context "registrations disabled" do
+    should "not show links for sign up" do
       disable_feature :user_registrations
 
       visit root_url
@@ -113,8 +113,8 @@ class UserLoginTest < ApplicationSystemTestCase
     end
   end
 
-  class OmniauthDisabled < UserLoginTest
-    test "do not display links for omniauth" do
+  context "omniauth disabled" do
+    should "not display links for omniauth" do
       disable_feature :user_omniauth
 
       visit new_user_session_url
@@ -123,9 +123,9 @@ class UserLoginTest < ApplicationSystemTestCase
     end
   end
 
-  class MagicLinksDisabled < UserLoginTest
-    test "fallback to password based login" do
-      FactoryBot.create(:user, email: "pass@localhost.none")
+  context "magic links disabled" do
+    should "fallback to password based login" do
+      create(:user, email: "pass@localhost.none")
 
       disable_feature :user_magic_links
 

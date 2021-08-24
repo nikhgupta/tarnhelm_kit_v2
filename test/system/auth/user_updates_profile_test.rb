@@ -1,15 +1,15 @@
 # frozen_string_literal: true
 require "application_system_test_case"
 
-class UserProfileTest < ApplicationSystemTestCase
+class UserUpdatesProfileTest < ApplicationSystemTestCase
   setup do
-    FactoryBot.create(:user,
+    create(:user,
       email: "john@localhost.none",
       unconfirmed_email: "unconfirmed-john@localhost.none",
       confirmation_sent_at: 1.day.ago,
       confirmation_token: SecureRandom.urlsafe_base64)
 
-    FactoryBot.create(:user, password: nil, email: "magic@localhost.none")
+    create(:user, password: nil, email: "magic@localhost.none")
   end
 
   context "default features" do
@@ -28,8 +28,12 @@ class UserProfileTest < ApplicationSystemTestCase
 
       click_on "Edit Profile"
       assert_button "Update Profile"
-      fill_in "user_name", with: "John George"
+
       fill_in "user_email", with: "new-john@localhost.none"
+      assert_field "user_email", with: "new-john@localhost.none"
+      fill_in "user_name", with: "John George"
+      assert_field "user_name", with: "John George"
+
       click_on "Update Profile"
       assert_flash notice: /updated your account successfully.*verify your new email address/
 
@@ -40,8 +44,8 @@ class UserProfileTest < ApplicationSystemTestCase
       visit edit_user_registration_url
       assert_no_flash
       click_on "Edit Profile"
-      assert page.has_field?("user_email", with: "new-john@localhost.none")
-      assert page.has_field?("user_name", with: "John George")
+      assert_field "user_email", with: "new-john@localhost.none"
+      assert_field "user_name", with: "John George"
 
       user = User.find_by(email: "new-john@localhost.none")
       assert user.present?
@@ -54,7 +58,7 @@ class UserProfileTest < ApplicationSystemTestCase
       sign_in_as("john@localhost.none")
 
       visit edit_user_registration_url
-      assert page.has_field?("user_email", with: "john@localhost.none")
+      assert_field "user_email", with: "john@localhost.none"
       assert_flash notice: "Currently waiting confirmation for: unconfirmed-john@localhost.none"
       assert_link "Delete my Data"
 
@@ -73,7 +77,7 @@ class UserProfileTest < ApplicationSystemTestCase
       sign_in_as("magic@localhost.none")
 
       visit edit_user_registration_url
-      assert page.has_field?("user_email", with: "magic@localhost.none")
+      assert_field "user_email", with: "magic@localhost.none"
       assert_link "Delete my Data"
 
       click_on "Change Password"
@@ -86,7 +90,7 @@ class UserProfileTest < ApplicationSystemTestCase
 
       open_last_email
       click_first_link_in_email
-      assert page.current_url.include?(edit_user_password_url)
+      assert_current_url_contains edit_user_password_url
 
       fill_in "New password", with: "magic-password"
       fill_in "Confirm new password", with: "wrong-password"
@@ -112,7 +116,7 @@ class UserProfileTest < ApplicationSystemTestCase
       sign_in_as("magic@localhost.none")
 
       visit edit_user_registration_url
-      assert page.has_field?("user_email", with: "magic@localhost.none")
+      assert_field "user_email", with: "magic@localhost.none"
 
       fill_in "user_email", with: "new-magic@localhost.none"
       click_on "Update Profile"
@@ -124,7 +128,7 @@ class UserProfileTest < ApplicationSystemTestCase
 
       visit edit_user_registration_url
       assert_no_flash
-      assert page.has_field?("user_email", with: "new-magic@localhost.none")
+      assert_field "user_email", with: "new-magic@localhost.none"
 
       sign_out
       sign_in_as("new-magic@localhost.none")
@@ -137,7 +141,8 @@ class UserProfileTest < ApplicationSystemTestCase
 
       sign_in_as("magic@localhost.none")
       visit edit_user_registration_url
-      assert page.has_field?("user_email", with: "magic@localhost.none")
+      assert_field "user_email", with: "magic@localhost.none"
+
       assert_link "Delete my Data"
       assert_field "user_email"
       assert_no_flash

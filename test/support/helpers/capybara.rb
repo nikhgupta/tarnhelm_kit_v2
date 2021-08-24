@@ -16,6 +16,10 @@ module CapybaraSystemTestHelpers
     page.driver.browser.manage.window.resize_to(1366, 768)
   end
 
+  def assert_current_url_contains(url)
+    assert(page.current_url.include?(url))
+  end
+
   def assert_flash(map = {})
     map.each do |key, message|
       if message

@@ -4,12 +4,12 @@ require "test_helper"
 
 class UsersPasswordsControllerTest < ActionDispatch::IntegrationTest
   setup do
-    @pass = FactoryBot.create(:user, email: "pass@localhost.none")
-    @magic = FactoryBot.create(:user, email: "magic@localhost.none", password: nil)
+    @pass = create(:user, email: "pass@localhost.none")
+    @magic = create(:user, email: "magic@localhost.none", password: nil)
   end
 
-  class DefaultFeatures < UsersPasswordsControllerTest
-    test "should not allow adding password for non-logged-in users" do
+  context "default features" do
+    should "not allow adding password for non-logged-in users" do
       get root_url
       get add_magic_user_password_url
 
@@ -19,7 +19,7 @@ class UsersPasswordsControllerTest < ActionDispatch::IntegrationTest
       assert_equal request.env["PATH_INFO"], root_path
     end
 
-    test "should not allow adding password to account with password set" do
+    should "not allow adding password to account with password set" do
       sign_in @pass
 
       get root_url
@@ -32,8 +32,8 @@ class UsersPasswordsControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  class PasswordsDisabled < UsersPasswordsControllerTest
-    test "password feature is disabled" do
+  context "passwords disabled" do
+    should "ensure password feature is disabled" do
       disable_feature :user_passwords
 
       sign_in @pass
@@ -42,7 +42,7 @@ class UsersPasswordsControllerTest < ActionDispatch::IntegrationTest
       assert_routes_disabled :new_user_password
     end
 
-    test "password feature is disabled for logged-in user" do
+    should "ensure password feature is disabled for logged-in user" do
       disable_feature :user_passwords
       Flipper.enable(:user_passwords, @magic)
 

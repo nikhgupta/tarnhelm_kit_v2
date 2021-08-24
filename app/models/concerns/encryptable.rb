@@ -3,8 +3,21 @@ module Encryptable
   extend ActiveSupport::Concern
 
   included do
-    after_initialize :generate_row_level_salt
-    validates :salt, presence: true, uniqueness: true
+    unless delegates_salt?
+      after_initialize :generate_row_level_salt
+      before_validation :generate_row_level_salt
+      validates :salt, presence: true, uniqueness: true
+    end
+  end
+
+  class_methods do
+    def delegates_salt?
+      !column_names.include?("salt")
+    end
+  end
+
+  def delegates_salt?
+    self.class.delegates_salt?
   end
 
   def encryption_key
@@ -23,14 +36,21 @@ module Encryptable
   end
 
   def generate_row_level_salt
-    return if salt.present?
+    return if delegates_salt? || salt.present?
     self.salt = SecureRandom.alphanumeric(128)
   end
 
   def update_salt!(str)
-    attrs = self.class.lockbox_attributes.keys
-    attrs = attrs.map { |f| [f, send(f)] }.to_h
-    update(attrs.merge(salt: str))
+    return if self.class.delegates_salt?
+
+    if self.class.respond_to?(:lockbox_attributes)
+      attrs = self.class.lockbox_attributes.keys
+      attrs = attrs.map { |f| [f, send(f)] }.to_h
+      self.salt = str
+      update(attrs.merge(salt: str))
+    else
+      update(salt: str)
+    end
   end
 
   class_methods do

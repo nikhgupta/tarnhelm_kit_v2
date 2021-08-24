@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 require "application_system_test_case"
 
-class UserSignUpTest < ApplicationSystemTestCase
-  class DefaultFeatures < UserSignUpTest
-    test "allow user to register using email only" do
+class UserRegistersTest < ApplicationSystemTestCase
+  context "default features" do
+    should "allow user to register using email only" do
       visit root_url
       click_on "Register"
       assert_button "Send me a Magic Link"
@@ -22,7 +22,7 @@ class UserSignUpTest < ApplicationSystemTestCase
       assert_flash notice: "email address has been successfully confirmed"
     end
 
-    test "allow user to register with a password" do
+    should "allow user to register with a password" do
       visit root_url
       click_on "Register"
       assert_button "Send me a Magic Link"
@@ -57,8 +57,8 @@ class UserSignUpTest < ApplicationSystemTestCase
     end
   end
 
-  class PasswordsDisabled < UserSignUpTest
-    test "do not allow user to register with a password" do
+  context "passwords disabled" do
+    should "not allow user to register with a password" do
       disable_feature :user_passwords
 
       visit root_url
@@ -72,8 +72,8 @@ class UserSignUpTest < ApplicationSystemTestCase
     end
   end
 
-  class OmniauthDisabled < UserSignUpTest
-    test "do not display links for omniauth" do
+  context "omniauth disabled" do
+    should "not display links for omniauth" do
       disable_feature :user_omniauth
 
       visit new_user_registration_url
@@ -82,8 +82,8 @@ class UserSignUpTest < ApplicationSystemTestCase
     end
   end
 
-  class MagicLinksDisabled < UserSignUpTest
-    test "fallback to password based registration" do
+  context "magic links disabled" do
+    should "fallback to password based registration" do
       disable_feature :user_magic_links
 
       visit root_url

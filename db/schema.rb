@@ -61,6 +61,7 @@ ActiveRecord::Schema.define(version: 2021_08_22_144040) do
     t.datetime "token_expires_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["provider", "uid"], name: "index_authenticating_identities_on_provider_and_uid", unique: true
     t.index ["salt"], name: "index_authenticating_identities_on_salt", unique: true
     t.index ["user_id"], name: "index_authenticating_identities_on_user_id"
   end

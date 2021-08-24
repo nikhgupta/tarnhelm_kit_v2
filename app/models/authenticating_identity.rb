@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 class AuthenticatingIdentity < ApplicationRecord
   include Encryptable
+  encrypts_each_row_of :token, :email, :refresh_token
+  encrypts_each_row_of :auth_data, type: :json
 
   belongs_to :user
   has_one_attached :avatar
 
-  encrypts_each_row_of :token, :email, :refresh_token
-  encrypts_each_row_of :auth_data, type: :json
+  validates_presence_of :provider, :uid
+  validates_uniqueness_of :uid, scope: :provider, case_sensitive: false
 
   def name
     OmniAuth::Utils.camelize(provider)

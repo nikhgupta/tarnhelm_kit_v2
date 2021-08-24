@@ -10,9 +10,11 @@
                         <%= sidebar_nav_link_to "Change Password", user_change_password_path %>
                     </li>
                 <%- end %>
-                <li>
-                    <%= sidebar_nav_link_to "Social Logins", authenticating_identities_path %>
-                </li>
+                <%- if current_user.enabled?(:user_omniauth) %>
+                    <li>
+                        <%= sidebar_nav_link_to "Social Logins", authenticating_identities_path %>
+                    </li>
+                <%- end %>
 
                 <li>
                     <%= sidebar_nav_link_to "Delete my Data", user_delete_data_path %>

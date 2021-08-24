@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 require "application_system_test_case"
 
-class UserOmniauthTest < ApplicationSystemTestCase
+class UserUsesSocialLinksTest < ApplicationSystemTestCase
   setup do
     reset_omniauth_mock_for(:google)
     reset_omniauth_mock_for(:twitter)
   end
 
-  class DefaultFeatures < UserOmniauthTest
-    test "user can register/login using Google OAuth2" do
+  context "default features" do
+    should "allow user to register/login using Google OAuth2" do
       @login = -> { click_on("Log in with Google") }
       @register = -> { click_on("Sign up with Google") }
       run_omniauth_flow(:google) do |auth|
@@ -20,7 +20,7 @@ class UserOmniauthTest < ApplicationSystemTestCase
       end
     end
 
-    test "user can register/login using Twitter OAuth2" do
+    should "allow user to register/login using Twitter OAuth2" do
       @login = -> { find(".oauth-twitter").click }
       @register = -> { find(".oauth-twitter").click }
       run_omniauth_flow(:twitter) do |auth|
@@ -32,12 +32,12 @@ class UserOmniauthTest < ApplicationSystemTestCase
       end
     end
 
-    test "user can add identity when logged in" do
+    should "allow user to add identity when logged in" do
       sign_in_via_google
       assert_linked_via_google
     end
 
-    test "user can remove identity when logged in" do
+    should "allow user to remove identity when logged in" do
       current = sign_in_via_google
       visit edit_user_registration_url
       click_on "Social Logins"
@@ -50,7 +50,7 @@ class UserOmniauthTest < ApplicationSystemTestCase
       assert current.authenticating_identity_for(:google).blank?
     end
 
-    test "identity gets re-assigned to latest authenticating user" do
+    should "re-assign identity to latest authenticating user" do
       user = FactoryBot.create(:user, email: "john@localhost.none")
       prev = sign_in_via_google
       sign_out
@@ -66,14 +66,14 @@ class UserOmniauthTest < ApplicationSystemTestCase
       assert prev.authenticating_identity_for(:google).blank?
     end
 
-    test "redirects to registration page if sign up info is missing" do
+    should "redirect to registration page if sign up info is missing" do
       OmniAuth.config.mock_auth[:google] = OmniAuth.config.mock_auth[:default]
       sign_in_via_google assertion: false
       assert_flash notice: "We need a few more details from you."
       assert_equal page.current_url, new_user_registration_url
     end
 
-    test "auto-assigns an email if missing from provider" do
+    should "auto-assign an email if missing from provider" do
       OmniAuth.config.mock_auth[:google].deep_merge!(info: { email: nil })
       current = sign_in_via_google
       assert_linked_via_google
@@ -81,7 +81,7 @@ class UserOmniauthTest < ApplicationSystemTestCase
       assert current.email =~ /google-\d+@identity\.users\..+/
     end
 
-    test "on omniauth error" do
+    should "show errors in UI on omniauth error" do
       OmniAuth.config.mock_auth[:google] = :some_error
       sign_in_via_google assertion: false
       assert_flash alert: 'Could not authenticate you using your Google account because of "Some error"'

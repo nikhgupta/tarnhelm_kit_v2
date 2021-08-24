@@ -2,8 +2,8 @@
 require "test_helper"
 
 class ApplicationRecordTest < ActiveSupport::TestCase
-  test "add missing information when available" do
-    user = FactoryBot.create(:user)
+  should "add missing information when available" do
+    user = create(:user)
     assert_nil user.first_name
 
     user.add_info_if_missing(:first_name, "Test")

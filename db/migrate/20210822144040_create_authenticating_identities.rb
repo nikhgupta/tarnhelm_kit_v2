@@ -23,5 +23,6 @@ class CreateAuthenticatingIdentities < ActiveRecord::Migration[6.1]
     end
 
     add_index :authenticating_identities, :salt, unique: true
+    add_index :authenticating_identities, [:provider, :uid], unique: true
   end
 end

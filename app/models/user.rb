@@ -46,9 +46,4 @@ class User < ApplicationRecord
   def after_magic_link_authentication
     confirm if unconfirmed_email.present? && !confirmed?
   end
-
-  def gravatar_url(options = {})
-    hash = Digest::MD5.hexdigest(email.strip.downcase)
-    "https://www.gravatar.com/avatar/#{hash}?#{options.to_query}"
-  end
 end

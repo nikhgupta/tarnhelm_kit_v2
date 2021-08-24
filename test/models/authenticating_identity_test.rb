@@ -1,8 +1,20 @@
 # frozen_string_literal: true
 require "test_helper"
+require_relative "concerns/encryptable_test"
 
 class AuthenticatingIdentityTest < ActiveSupport::TestCase
   attr_reader :auth, :identity
+
+  include EncryptableTest
+  should_encrypt_attributes :token, :refresh_token, :email, :auth_data
+
+  subject { build(:authenticating_identity) }
+
+  should belong_to(:user)
+  should have_one_attached(:avatar)
+  should validate_presence_of(:provider)
+  should validate_presence_of(:uid)
+  should validate_uniqueness_of(:uid).scoped_to(:provider).case_insensitive
 
   setup do
     reset_omniauth_mock_for(:google)
@@ -16,44 +28,14 @@ class AuthenticatingIdentityTest < ActiveSupport::TestCase
     @identity.reload
   end
 
-  test "find an identity with omniauth data" do
+  should "find an identity with omniauth data" do
     record = AuthenticatingIdentity.find_with_omniauth(auth)
     assert_equal record, identity
 
     assert_nil AuthenticatingIdentity.find_with_omniauth(auth.merge(uid: "not-uid"))
   end
 
-  test "encrypts the data in database" do
-    record = AuthenticatingIdentity.find_with_omniauth(auth)
-    encrypted = ["token", "email", "refresh_token", "auth_data"]
-    encrypted.each do |column|
-      assert_raises { AuthenticatingIdentity.where(id: record.id).pluck(:salt, column) }
-      val = record.send(column)
-      cip = record.send("#{column}_ciphertext")
-      assert val.present?
-      refute_equal val, cip
-      assert cip.match?(%r{\A[a-z0-9=\+/]+\z}i)
-    end
-  end
-
-  test "changing the salt makes data un-decryptable" do
-    record = AuthenticatingIdentity.find_with_omniauth(auth)
-    record.update(salt: "whatever")
-
-    record = AuthenticatingIdentity.find_with_omniauth(auth)
-    assert_raises(Lockbox::DecryptionError) { record.attributes }
-  end
-
-  test "#update_salt! can be used to safely update salt" do
-    record = AuthenticatingIdentity.find_with_omniauth(auth)
-    current_auth_data = record.auth_data
-    record.update_salt!("whatever")
-
-    record = AuthenticatingIdentity.find_with_omniauth(auth)
-    assert_equal record.auth_data, current_auth_data
-  end
-
-  test "check if an identity's token has #expired?" do
+  should "check if an identity's token has #expired?" do
     identity.token_expires_at = 15.minutes.since
     assert_equal identity.expired?, false
 
@@ -61,7 +43,7 @@ class AuthenticatingIdentityTest < ActiveSupport::TestCase
     assert_equal identity.expired?, true
   end
 
-  test "#update_credentials for an identity" do
+  should "#update_credentials for an identity" do
     data = { token: identity.token, refresh_token: identity.refresh_token,
              token_expires_at: identity.token_expires_at, }
 
@@ -82,7 +64,7 @@ class AuthenticatingIdentityTest < ActiveSupport::TestCase
     assert identity.token_expires_at > data[:token_expires_at]
   end
 
-  test "#access_token should be usable for fresh tokens at any time" do
+  should "allow #access_token for fresh tokens at any time" do
     assert_equal identity.expired?, false
     assert_equal identity.token, identity.access_token
 
