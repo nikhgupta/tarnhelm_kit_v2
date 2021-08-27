@@ -88,3 +88,6 @@ gem "omniauth"
 gem "omniauth-twitter"
 gem "omniauth-google-oauth2"
 gem "omniauth-rails_csrf_protection"
+
+# multi-tenancy
+gem "acts_as_tenant"

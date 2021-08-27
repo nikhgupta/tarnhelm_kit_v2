@@ -2,6 +2,8 @@
 require "application_system_test_case"
 
 class UserUpdatesProfileTest < ApplicationSystemTestCase
+  setup { Tarnhelm.activate_initial_features! }
+
   setup do
     create(:user,
       email: "john@localhost.none",
@@ -12,7 +14,7 @@ class UserUpdatesProfileTest < ApplicationSystemTestCase
     create(:user, password: nil, email: "magic@localhost.none")
   end
 
-  context "default features" do
+  context "all features" do
     should "allow user with password auth to update email" do
       sign_in_as("john@localhost.none")
 
@@ -28,6 +30,7 @@ class UserUpdatesProfileTest < ApplicationSystemTestCase
 
       click_on "Edit Profile"
       assert_button "Update Profile"
+      sleep 1 # FIXME
 
       fill_in "user_email", with: "new-john@localhost.none"
       assert_field "user_email", with: "new-john@localhost.none"

@@ -5,7 +5,9 @@ module TarnhelmMinitestFeatureDisabler
   extend ActiveSupport::Concern
 
   def before_setup
-    Tarnhelm.activate_initial_features!
+    Tarnhelm.features_list.each do |feature|
+      Flipper.disable(feature[:name])
+    end
 
     super
   end

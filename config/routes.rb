@@ -25,8 +25,16 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :authenticating_identities, path: :authentications, only: [:index, :destroy]
   mount Flipper::UI.app(Flipper) => "/admin/flipper", as: :feature_management
+
+  authenticate :user, ->(user) { user.enabled?(:user_accounts) } do
+    resources :accounts, except: [:edit, :update, :destroy] do
+      member do
+        post :switch
+      end
+    end
+  end
+  resources :authenticating_identities, path: :authentications, only: [:index, :destroy]
 
   get "/pages/:id", to: "pages#show", as: :pages
   root to: "pages#show", id: :home

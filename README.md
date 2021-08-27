@@ -57,8 +57,8 @@ opt-out of such features by not using them in the code that you write.
 - [x] Passwordless Login/Registration (magic link)
 - [x] Fallback to traditional password-based logins
 - [x] Omniauth (Google and Twitter example)
+- [x] Multi-tenancy (via accounts)
 - [ ] User invitation system
-- [ ] Multi-tenancy (via accounts)
 - [ ] User impersonation
 - [ ] User roles and permissions
 - [ ] Pundit policies for authorization

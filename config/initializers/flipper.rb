@@ -14,3 +14,22 @@ Flipper::UI.configure do |config|
   config.banner_text = "#{Rails.env.to_s.titleize} Environment"
   config.banner_class = Rails.env.production? ? "danger" : "success"
 end
+
+if ENV["TARNHELM_USE_OMNIAUTH_WITHOUT_REGISTRATIONS"].blank?
+  if Tarnhelm.active?(:user_omniauth) && Tarnhelm.inactive?(:user_registrations)
+    Rails.logger.warn(<<~MESSAGE)
+      [RECOMMENDED] - You should also activate user_registrations feature or disable omniauth!
+                    - You can disable this recommendation by setting TARNHELM_USE_OMNIAUTH_WITHOUT_REGISTRATIONS environment variable.
+    MESSAGE
+  end
+end
+
+if ENV["TARNHELM_DISABLE_USER_LOGIN"].blank?
+  if Tarnhelm.inactive?(:user_passwords) && Tarnhelm.inactive?(:user_magic_links) && Tarnhelm.inactive?(:user_omniauth)
+    Rails.logger.warn(<<~MESSAGE)
+      [RECOMMENDED] - You should enable one of user_passwords, user_magic_links or user_omniauth.
+                    - Currently, users are unable to login.
+                    - You can disable this recommendation by setting TARNHELM_DISABLE_USER_LOGIN environment variable.
+    MESSAGE
+  end
+end

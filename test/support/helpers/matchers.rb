@@ -6,16 +6,14 @@ module MinitestMatchers
       [method].flatten.each do |m|
         if route.is_a?(String)
           message = "#{m.to_s.upcase}: #{route} exists"
-          exceptions << assert_raises(ActionController::RoutingError, message) do
-            send(m, route)
-            follow_redirect!
-          end
         else
           message = "#{m.to_s.upcase}: #{route}_path (#{send("#{route}_path")}) exists"
-          exceptions << assert_raises(ActionController::RoutingError, message) do
-            send(m, send("#{route}_url"))
-            follow_redirect!
-          end
+          route = send("#{route}_url")
+        end
+
+        exceptions << assert_raises(ActionController::RoutingError, message) do
+          send(m, route)
+          follow_redirect! if response.redirect?
         end
       end
     end
@@ -27,6 +25,7 @@ module MinitestMatchers
     routes.each do |route|
       [method].flatten.each do |m|
         send(m, route.is_a?(String) ? route : send("#{route}_url"))
+        follow_redirect! if response.redirect?
       end
     end
   end

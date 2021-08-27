@@ -10,11 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_22_144040) do
+ActiveRecord::Schema.define(version: 2021_08_23_122722) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "accounts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name"
+    t.string "salt"
+    t.boolean "personal", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["personal"], name: "index_accounts_on_personal"
+    t.index ["salt"], name: "index_accounts_on_salt", unique: true
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -84,6 +94,24 @@ ActiveRecord::Schema.define(version: 2021_08_22_144040) do
     t.index ["feature_key", "key", "value"], name: "index_flipper_gates_on_feature_key_and_key_and_value", unique: true
   end
 
+  create_table "memberships", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "account_id", null: false
+    t.uuid "user_id", null: false
+    t.uuid "invited_by_id"
+    t.string "invitation_token"
+    t.datetime "invitation_created_at"
+    t.datetime "invitation_sent_at"
+    t.datetime "invitation_accepted_at"
+    t.integer "invitation_limit"
+    t.integer "invitations_count", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["account_id", "user_id"], name: "index_memberships_on_account_id_and_user_id", unique: true
+    t.index ["invitation_token"], name: "index_memberships_on_invitation_token", unique: true
+    t.index ["invited_by_id"], name: "index_memberships_on_invited_by_id"
+    t.index ["user_id"], name: "index_memberships_on_user_id"
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "salt"
     t.string "email", default: "", null: false
@@ -115,4 +143,7 @@ ActiveRecord::Schema.define(version: 2021_08_22_144040) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "authenticating_identities", "users"
+  add_foreign_key "memberships", "accounts"
+  add_foreign_key "memberships", "users"
+  add_foreign_key "memberships", "users", column: "invited_by_id"
 end

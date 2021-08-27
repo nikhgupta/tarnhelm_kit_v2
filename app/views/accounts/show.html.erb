@@ -1,0 +1,30 @@
+<h2 class="heading">Edit User Account</h2>
+
+<div class="flex flex-row">
+    <%= render partial: "devise/registrations/navigation" %>
+
+    <section class="flex flex-grow flex-col">
+        <h3 class="heading text-primary my-0"><%= @resource.display_name %></h3>
+
+        <% if @resource.personal? %>
+            <p class="alert alert-warning mb-20">
+                This is a private account! You should create a new account using the button below to invite members.
+            </p>
+            <%= link_to "Create another Account", new_account_path, class: "btn btn-success w-60" %>
+        <% else %>
+            <p class="text-secondary title-font font-bold mt-10 mb-3">Users</p>
+            <div class="container flex flex-col">
+                <% @resource.users.order(email: :asc).each do |user| %>
+                    <div class="flex flex-col py-3 mb-2 border-b border-base-200 sm:flex-row lg:w-1/2">
+                        <div class="inline-flex items-center flex-grow mt-6 text-center sm:text-left sm:mt-0">
+                            <h2 class="font-semibold tracking-light text-base-content hover:text-secondary title-font">
+                                <%= link_to user.email, "#" %>
+                            </h2>
+                            <span class="ml-auto text-primary hover:text-secondary">»</span>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        <% end %>
+    </section>
+</div>

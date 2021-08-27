@@ -2,12 +2,14 @@
 require "application_system_test_case"
 
 class UserUsesSocialLinksTest < ApplicationSystemTestCase
+  setup { Tarnhelm.activate_initial_features! }
+
   setup do
     reset_omniauth_mock_for(:google)
     reset_omniauth_mock_for(:twitter)
   end
 
-  context "default features" do
+  context "all features" do
     should "allow user to register/login using Google OAuth2" do
       @login = -> { click_on("Log in with Google") }
       @register = -> { click_on("Sign up with Google") }

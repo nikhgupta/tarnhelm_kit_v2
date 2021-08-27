@@ -23,7 +23,7 @@
 
                     <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
                         <div class="my-5">
-                            <%= render(Flash::Component.new(flash: {notice: "Currently waiting confirmation for: #{resource.unconfirmed_email}"}, dismissable: false)) %>
+                            <%= render(SharedComponents::Flash::Component.new(flash: {notice: "Currently waiting confirmation for: #{resource.unconfirmed_email}"}, dismissable: false)) %>
                         <% end %>
                     </div>
                 </div>

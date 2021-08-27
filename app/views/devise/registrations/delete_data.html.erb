@@ -10,9 +10,11 @@
             <ul class="mb-10 font-bold">
                 <li>- You</li>
                 <li>- Your Personal Account</li>
-                <% current_user.accounts.where(personal: false).each do |account| %>
-                    <li>- Account named <strong><%= account.name %></strong></li>
-                <% end %>
+                <%- if current_user.enabled?(:user_accounts) %>
+                    <%- current_user.accounts.where(personal: false).each do |account| %>
+                        <li>- Account named <strong><%= account.name %></strong></li>
+                    <%- end %>
+                <%- end %>
             </ul>
         </div>
 

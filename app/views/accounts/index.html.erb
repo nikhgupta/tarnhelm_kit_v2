@@ -1,0 +1,20 @@
+<h2 class="heading">Edit User Account</h2>
+
+<div class="flex flex-row">
+    <%= render partial: "devise/registrations/navigation" %>
+    <section class="flex flex-grow">
+        <div class="container flex flex-col">
+            <% @accounts.each do |account| %>
+                <div class="flex flex-col py-3 mb-2 border-b border-blueGray-200 sm:flex-row lg:w-1/2">
+                    <div class="inline-flex items-center flex-grow mt-6 text-center sm:text-left sm:mt-0">
+                        <h2 class="font-semibold tracking-light <%= account.personal? ? "text-accent-focus" : "text-base-content" %> hover:text-secondary title-font">
+                            <%= link_to account.display_name, account_path(account) %>
+                        </h2>
+                        <span class="ml-auto text-primary hover:text-secondary">»</span>
+                    </div>
+                </div>
+            <% end %>
+            <%= link_to "Create another Account", new_account_path, class: "text-success font-bold mt-5" %>
+        </div>
+    </section>
+</div>

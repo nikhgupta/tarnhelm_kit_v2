@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
 class Users::ConfirmationsController < Devise::ConfirmationsController
+  prepend_before_action { check_feature_enabled?(:user_registrations) }
+
   # GET /resource/confirmation/new
   # def new
   #   super

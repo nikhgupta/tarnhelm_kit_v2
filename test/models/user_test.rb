@@ -13,6 +13,12 @@ class UserTest < ActiveSupport::TestCase
 
   should have_one_attached(:avatar)
   should have_many(:authenticating_identities).dependent(:destroy)
+  should have_many(:memberships).dependent(:destroy)
+  should have_many(:accounts).through(:memberships)
+  should have_many(:invitees).through(:memberships)
+  should have_many(:invitations).class_name("Membership").with_foreign_key(:invited_by_id)
+  should have_many(:invited_users).through(:invitations).source(:user).class_name("User")
+
   context "validations" do
     should "validate confirmation of password" do
       assert subject.valid?
@@ -45,30 +51,24 @@ class UserTest < ActiveSupport::TestCase
     assert_nil subject.last_name
   end
 
-  should "check whether subject login using password" do
+  should "check whether subject login using password or magic links" do
+    refute subject.requires_magic_link?
+    refute subject.can_login_using_password?
+
+    Flipper.enable(:user_passwords)
+    Flipper.disable(:user_magic_links)
     refute subject.requires_magic_link?
     assert subject.can_login_using_password?
 
-    disable_feature :user_passwords
+    Flipper.enable(:user_magic_links)
+    Flipper.disable(:user_passwords)
     assert subject.requires_magic_link?
     refute subject.can_login_using_password?
 
-    disable_feature :user_magic_links
-    refute subject.requires_magic_link?
-    refute subject.can_login_using_password?
-  end
-
-  should "check whether subject can only login with magic link" do
-    assert magic.requires_magic_link?
-    refute magic.can_login_using_password?
-
-    disable_feature :user_magic_links
+    Flipper.enable(:user_passwords)
+    Flipper.enable(:user_magic_links)
     refute subject.requires_magic_link?
     assert subject.can_login_using_password?
-
-    disable_feature :user_passwords
-    refute subject.requires_magic_link?
-    refute subject.can_login_using_password?
   end
 
   should "provide a check for #generated_email?" do
@@ -83,6 +83,19 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal subject.authenticating_identity_for(:test), auth
     assert_nil subject.authenticating_identity_for(:something_else)
+  end
+
+  should "create a personal account for the user on creation" do
+    assert subject.personal_account.present?
+    assert subject.personal_account.is_a?(Account)
+  end
+
+  should "allow finding #accounts_with a given id or user's #personal_account" do
+    account = create(:account)
+    subject.accounts << account
+
+    assert_equal subject.account_with(account.id), account
+    assert_equal subject.account_with(subject.personal_account.id), subject.personal_account
   end
 
   should "find internal subjects easily" do

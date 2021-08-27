@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  prepend_before_action(only: [:edit, :update]) { auth_enabled? }
   prepend_before_action(except: [:edit, :update]) { check_feature_enabled?(:user_registrations) }
   before_action :configure_account_update_params, only: [:update]
   # before_action :configure_sign_up_params, only: [:create]

@@ -1,0 +1,12 @@
+<div class="mb-10 max-w-screen-sm w-full">
+    <div class="w-full mb-10">
+        <%= form_with(model: account) do |form| %>
+            <div>
+                <%= form.label :name, class: "form-control form-helper-text" %>
+                <%= form.text_field :name, autofocus: true, placeholder: "Name for this account", class: "form-control form-field block w-full" %>
+            </div>
+
+            <%= form.submit "Create Account", class: "btn btn-primary mt-5" %>
+        <% end %>
+    </div>
+</div>

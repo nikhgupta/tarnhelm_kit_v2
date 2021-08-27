@@ -26,6 +26,7 @@ module Tarnhelm
       activate_feature(:user_registrations, "Users can register themselves on this site.")
       activate_feature(:user_magic_links, "Users can use magic links for authentication.")
       activate_feature(:user_omniauth, "Users can use social identities for authentication.")
+      activate_feature(:user_accounts, "Users can create multiple accounts (tenants)")
       activate_feature(:user_invitations, "Users can invite other users")
     end
 

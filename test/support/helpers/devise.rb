@@ -43,6 +43,21 @@ module DeviseSystemTestHelpers
     AuthenticatingIdentity.find_with_omniauth(OmniAuth.config.mock_auth[:google]).user
   end
 
+  def assert_user_can_switch_to_account(name: nil, show_flash: true)
+    visit(root_url)
+    find("#user-menu").click
+    assert_link("Personal Account")
+    click_on(name || "Personal Account")
+    assert_equal(page.current_url, root_url)
+
+    if show_flash
+      message = name ? "Switched to #{name}'s account" : "Switched to your personal account."
+      assert_flash(notice: message)
+    else
+      assert_no_flash
+    end
+  end
+
   def assert_linked_via_google
     visit(edit_user_registration_url)
     click_on("Social Logins")

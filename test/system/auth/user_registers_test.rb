@@ -2,7 +2,9 @@
 require "application_system_test_case"
 
 class UserRegistersTest < ApplicationSystemTestCase
-  context "default features" do
+  setup { Tarnhelm.activate_initial_features! }
+
+  context "all features" do
     should "allow user to register using email only" do
       visit root_url
       click_on "Register"

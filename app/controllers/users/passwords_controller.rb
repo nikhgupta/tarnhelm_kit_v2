@@ -5,7 +5,7 @@ class Users::PasswordsController < Devise::PasswordsController
   skip_before_action :require_no_authentication, only: [:add_password_to_magic_account]
 
   def add_password_to_magic_account
-    if current_user&.requires_magic_link?
+    if allow_adding_password?
       current_user.send_reset_password_instructions
       sign_out(resource_name)
       flash[:notice] = I18n.t("devise.passwords.added_and_email_sent")
@@ -49,4 +49,10 @@ class Users::PasswordsController < Devise::PasswordsController
   # def after_sending_reset_password_instructions_path_for(resource_name)
   #   super(resource_name)
   # end
+
+  private
+
+  def allow_adding_password?
+    current_user&.enabled?(:user_passwords) && !current_user&.password_set?
+  end
 end

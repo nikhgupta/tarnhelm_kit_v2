@@ -2,7 +2,8 @@
 require "application_system_test_case"
 
 class UserLoginsTest < ApplicationSystemTestCase
-  context "default features" do
+  setup { Tarnhelm.activate_initial_features! }
+  context "all features" do
     should "visit static pages without logging in" do
       visit root_url
       assert_logged_out_ui
