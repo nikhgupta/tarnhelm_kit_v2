@@ -8,7 +8,6 @@ Rails.application.routes.draw do
       sign_in: "login", sign_out: "logout", sign_up: "register",
     }, controllers: {
       passwords: "users/passwords",
-      invitations: "users/invitations",
       confirmations: "users/confirmations",
       registrations: "users/registrations",
       sessions: "devise/passwordless/sessions",
