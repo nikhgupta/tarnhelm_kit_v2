@@ -86,4 +86,7 @@ Rails.application.configure do
   config.hosts << ".lvh.me"
   config.hosts << ".#{Tarnhelm.app.host}"
   config.action_cable.allowed_request_origins = /(\.test$)|^localhost$/
+  config.action_controller.asset_host = proc { |source|
+    "//webpack.#{Tarnhelm.app.host}" if source.starts_with?("/packs")
+  }
 end

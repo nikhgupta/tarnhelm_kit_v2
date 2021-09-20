@@ -44,6 +44,7 @@ group :development do
   gem "rubocop-rails", require: false
   gem "rubocop-rspec", require: false
   gem "rubocop-shopify", require: false
+  gem "solargraph"
   gem "spring"
   gem "web-console", ">= 4.1.0"
 end
