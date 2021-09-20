@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.3.0](https://github.com/nikhgupta/tarnhelm_kit_v2/compare/v0.2.0...v0.3.0) (2021-09-20)
+
+
+### Features
+
+* **users:** add multi-tenancy using accounts model ([36e0546](https://github.com/nikhgupta/tarnhelm_kit_v2/commit/36e05466ef70bfbd534cc9341cba35bc7ca28b71))
+
+
+### Other things
+
+* **cleanup:** remove devise_invitable left overs ([f61e459](https://github.com/nikhgupta/tarnhelm_kit_v2/commit/f61e45975602a22333bf47022665f01b20552f87))
+* **tests:** replace fixtures with factories ([b70f90d](https://github.com/nikhgupta/tarnhelm_kit_v2/commit/b70f90d3d20adfb2a75102e200c12ce3332e7b21))
+* update webpacker to allow hot reloads ([fc7a860](https://github.com/nikhgupta/tarnhelm_kit_v2/commit/fc7a8602d868ea17ac53f6ccaa2315fe9b933041))
+
 ## [0.2.0](https://github.com/nikhgupta/tarnhelm_kit_v2/compare/v0.1.0...v0.2.0) (2021-09-20)
 
 
