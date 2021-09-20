@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/nikhgupta/tarnhelm_kit_v2/compare/v0.1.0...v0.2.0) (2021-09-20)
+
+
+### Features
+
+* **pages:** add a homepage with StimulusJS and view components ([880165d](https://github.com/nikhgupta/tarnhelm_kit_v2/commit/880165d3fab46e13aa5f5d7565387101f5a7c74f))
+* **users:** add devise with omniauth, lockbox and rspec tests ([bfb2b48](https://github.com/nikhgupta/tarnhelm_kit_v2/commit/bfb2b48a0998c0e9a3b613b2e208477c75fd6251))
+
+
+### Other things
+
+* add lockbox gem config and master key ([8a53041](https://github.com/nikhgupta/tarnhelm_kit_v2/commit/8a530415fa32c4c931d00c7ca712dc191e5d0239))
+
 ## 0.1.0 (2021-09-20)
 
 

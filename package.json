@@ -1,7 +1,7 @@
 {
   "name": "tarnhelm",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "dependencies": {
     "@babel/preset-typescript": "^7.15.0",
     "@fullhuman/postcss-purgecss": "^4.0.3",
