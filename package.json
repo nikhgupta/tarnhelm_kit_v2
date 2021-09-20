@@ -38,10 +38,12 @@
     "eslint-plugin-import": "^2.24.0",
     "eslint-plugin-prettier": "^3.4.0",
     "prettier": "^2.3.2",
+    "standard-version": "^9.3.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.2"
   },
   "scripts": {
-    "eslint-fix": "yarn run eslint --fix --ext .js,.ts ."
+    "eslint-fix": "yarn run eslint --fix --ext .js,.ts .",
+    "release": "yarn run standard-version"
   }
 }
